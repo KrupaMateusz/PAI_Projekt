@@ -122,10 +122,8 @@ function renderRestaurantCards(json, selectedKeys) {
 
 function renderRestaurantDetails(selectedRestaurant) {
 
-
   const main = document.querySelector(".main")
   main.innerHTML = ""
-
 
   recid = json[selectedRestaurant].recordID
 
@@ -136,12 +134,8 @@ function renderRestaurantDetails(selectedRestaurant) {
   .then(data => {
     menuJson = JSON.parse(data.response.scriptResult)
 
-  
-
-
   const restaurantSection = document.createElement("section")
   restaurantSection.className = "restaurantSection"
-
 
   const img = document.createElement("img")
   img.src = json[selectedRestaurant].Picture?.base64
@@ -150,19 +144,15 @@ function renderRestaurantDetails(selectedRestaurant) {
   img.className = "restaurantPicture"
   restaurantSection.appendChild(img)
 
-
   const article = document.createElement("article")
   article.className = "restaurantDetails"
-
 
   const h1 = document.createElement("h1")
   h1.textContent = json[selectedRestaurant].name || "Nazwa Restauracji"
 
-
   const line1 = document.createElement("span")
   line1.className = "addressLine"
   line1.innerHTML = `<p>${json[selectedRestaurant].city || "Miasto"}</p><p>${json[selectedRestaurant].postal || "00-000"}</p>`
-
 
   const line2 = document.createElement("span")
   line2.className = "addressLine"
@@ -178,18 +168,14 @@ function renderRestaurantDetails(selectedRestaurant) {
   article.appendChild(desc)
   restaurantSection.appendChild(article)
 
-
   const menuSection = document.createElement("section")
   menuSection.className = "menuSection"
-
 
   const menuHeader = document.createElement("h3");
   menuHeader.className = "sectionHeader";
   menuHeader.textContent = "Menu";
 
-
   const menuList = document.createElement("ul");
-
 
   const categoryMap = {
     "1": "Przystawki",
@@ -198,19 +184,14 @@ function renderRestaurantDetails(selectedRestaurant) {
     "4": "Napoje"
   };
 
-
   const categorized = {};
 
-
-  // Kategoryzuj menu
   for (const key in menuJson.menu) {
     const item = menuJson.menu[key];
     if (!categorized[item.category]) categorized[item.category] = [];
     categorized[item.category].push(item.name);
   }
 
-
-  // Generuj li
   for (const cat of Object.keys(categoryMap)) {
     if (!categorized[cat]) continue;
     const categoryItem = document.createElement("li");
@@ -227,12 +208,9 @@ function renderRestaurantDetails(selectedRestaurant) {
     });
   }
 
-
   menuSection.appendChild(menuHeader);
   menuSection.appendChild(menuList);
 
-
-  // === SECTION: commentsSection ===
   const commentsSection = document.createElement("section");
   commentsSection.className = "commentsSection";
 
@@ -266,43 +244,9 @@ function renderRestaurantDetails(selectedRestaurant) {
   commentsSection.appendChild(commentsHeader);
   commentsSection.appendChild(commentsList);
 
-  // === Dołącz wszystko do <main> ===
   main.appendChild(restaurantSection);
   main.appendChild(menuSection);
   main.appendChild(commentsSection);
-
-
-  // json.selectedRestaurant.forEach(key => {
-  //   const restaurant = json[key]
-  //   if (!restaurant) return
-
-  //   const td = document.createElement("td")
-  //   td.classList.add("restaurantCard")
-
-  //   const img = document.createElement("img")
-  //   img.classList.add("restaurantImg", "image")
-  //   img.alt = "restaurantPicture"
-  //   img.src = restaurant.Picture?.base64
-  //     ? `data:image/jpeg;base64,${restaurant.Picture.base64}`
-  //     : "default.jpg"
-
-  //   const name = document.createElement("h3")
-  //   name.classList.add("restaurantName")
-  //   name.textContent = restaurant.name || key
-
-  //   const price = document.createElement("p")
-  //   price.classList.add("restaurantPrices")
-  //   price.textContent = restaurant.avgPrice ? `${restaurant.avgPrice} pln` : "brak ceny"
-
-  //   td.appendChild(img)
-  //   td.appendChild(name)
-  //   td.appendChild(price)
-  //   table.appendChild(td)
-  //   main.appendChild(table)
-  // });
-  
-  // let resCards = document.querySelectorAll(".restaurantCard")
-  // resCards.forEach((el) => {el.addEventListener("click", (e)=>{console.log(e.target.parentElement.querySelector('h3').innerHTML)})})
 
   let goBack = document.querySelector(".go-back-btn")
   goBack.classList.remove("display-none")
