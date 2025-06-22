@@ -1,0 +1,1 @@
+W celu uruchomienia projektu należy z konsoli przejść do folderu projektu i uruchomić server node poleceniem 'node proxy.mjs'. Dopiero wtedy można uruchomić stronę w przeglądarce aby mogła ona pobrać dane.
